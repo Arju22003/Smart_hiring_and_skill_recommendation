@@ -2,6 +2,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from preprocessing import preprocess_data
+from sklearn.model_selection import cross_val_score
+import pickle
 
 # Load & preprocess
 resume_path = "../dataset/raw/UpdatedResumeDataSet.csv"
@@ -28,3 +30,9 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
 print("Model Accuracy:", accuracy)
+
+
+cross_val_score=cross_val_score(model,X_train,y_train,cv=5,scoring="accuracy").mean()
+print("Cross_val_score :",cross_val_score)
+
+pickle.dump(model,open('app.pkl','wb'))
